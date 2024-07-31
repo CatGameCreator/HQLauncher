@@ -11,7 +11,7 @@ import glob
 import shutil
 import subprocess
 
-file_path = os.path.realpath(__file__)
+file_path = os.path.realpath(sys.argv[0])
 file_directory_path = os.path.dirname(sys.argv[0])
 file_directory_path = os.path.abspath(file_directory_path)
 assets_path = rf"{file_directory_path}\assets"
@@ -26,7 +26,7 @@ language = "en"
 allow_experimental_settings = "0"
 integrity_check = "1"
 update_check = "1"
-version = "0.1.0"
+version = "0.1.2"
 app_config_version = "0.0.1"
 config_version = "0.0.1"
 current_user_id = str(random.randint(100000000000000000000000000, 100000000000000000000000000000))
@@ -74,9 +74,12 @@ start HQLauncher-{latest_version_name}.exe -update -{version}''')
 
 def NewVersionUpdate (previous_version):
     for clean_up_file in glob.glob(f'{file_directory_path}/*'):
-        if not clean_up_file.title() == f'HQLauncher-{version}.exe':
-            if not clean_up_file.title() == f'assets':
-                if not clean_up_file.title() == f'_internal':
+        print(clean_up_file.title())
+        print(clean_up_file)
+        if not clean_up_file.endswith(sys.argv[0]):
+            print(f"{clean_up_file} is not {sys.argv[0]}")
+            if not clean_up_file.endswith('assets'):
+                if not clean_up_file.endswith(f'_internal'):
                     if os.path.isfile(clean_up_file):
                         os.remove(clean_up_file)
                     elif os.path.isdir(clean_up_file):
